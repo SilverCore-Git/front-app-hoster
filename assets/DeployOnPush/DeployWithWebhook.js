@@ -14,7 +14,7 @@ module.exports = async function (webhook) {
         const repoUrl = webhook.repository.clone_url;
         if (!repoUrl) throw new Error("repoUrl non défini");
 
-        DeployWithGitUrl(repoUrl);
+        DeployWithGitUrl(repoUrl, process.env.BRANCHES);
 
     } catch (err) {
         console.error("Erreur lors du déploiement :", err);
