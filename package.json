@@ -1,5 +1,5 @@
 {
-   "name": "silvercorefr",
+  "name": "front-app-hoster",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -8,9 +8,10 @@
     "start": "pm2 start ecosystem.config.cjs",
     "stop": "pm2 stop ecosystem.config.cjs",
     "deploy": "npm i && npm run start",
-    "redeploy": "npm run stop && npm run deploy"
+    "redeploy": "npm run stop && npm run deploy",
+    "deploy:git": "node assets/DeployGit.js"
   },
-  "author": "",
+  "author": "Silvercore_cloud",
   "description": "",
   "dependencies": {
     "dotenv": "^16.5.0",
