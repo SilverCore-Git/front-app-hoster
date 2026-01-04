@@ -1,16 +1,15 @@
 const execCommand = require("../utils/execCommand");
 const fs = require("fs");
 const path = require("path");
-require("dotenv").config();
 
 
-
-module.exports = async function () {
+module.exports = async function
+(repoUrl)
+{
         
     try {
 
-        const repoUrl = process.env.GIT_URL;
-        if (!repoUrl) throw new Error("process.env.GIT_URL non défini");
+        if (!repoUrl) throw new Error("repoUrl non défini");
 
         const appDir = path.resolve(__dirname, "../../app");
 
@@ -26,7 +25,6 @@ module.exports = async function () {
             await execCommand(`git -C ${appDir} reset --hard origin/main`);
         }
 
-        return
         console.log("Installation des dépendances...");
         await execCommand(`npm install`, { cwd: appDir });
 
