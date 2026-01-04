@@ -1,12 +1,13 @@
 {
   "name": "front-app-hoster",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "assets/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "log": "pm2 logs ecosystem.config.cjs --lines 100",
     "dev": "node server.js",
     "start": "pm2 start ecosystem.config.cjs",
     "stop": "pm2 stop ecosystem.config.cjs",
+    "restart": "npm run stop && npm run start",
     "deploy": "npm i && npm run deploy:git && npm run start",
     "redeploy": "npm run stop && npm run deploy",
     "deploy:git": "node assets/DeployGit.js"
@@ -14,6 +15,7 @@
   "author": "Silvercore_cloud",
   "description": "",
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
     "fs": "0.0.1-security",

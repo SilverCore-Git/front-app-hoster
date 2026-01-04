@@ -4,7 +4,7 @@ const path = require("path");
 
 
 module.exports = async function
-(repoUrl)
+(repoUrl, branche = "main")
 {
         
     try {
@@ -16,13 +16,13 @@ module.exports = async function
         if (!fs.existsSync(appDir))
         {
             console.log("Clonage du repo dans ./app...");
-            await execCommand(`git clone ${repoUrl} ${appDir}`);
+            await execCommand(`git clone -b ${branche} ${repoUrl} ${appDir}`);
         }
         else
         {
             console.log("Mise à jour du repo existant...");
             await execCommand(`git -C ${appDir} fetch --all`);
-            await execCommand(`git -C ${appDir} reset --hard origin/main`);
+            await execCommand(`git -C ${appDir} reset --hard origin/${branche}`);
         }
 
         console.log("Installation des dépendances...");

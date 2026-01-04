@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const crypto = require("crypto");
-const CreateNewBuild = require("./DeployWithWebhook");
+const CreateNewBuild = require("../DeployOnPush/DeployWithWebhook");
 require("dotenv").config();
 
 const router = Router();

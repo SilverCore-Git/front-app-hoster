@@ -1,8 +1,8 @@
 const DeployWithGitUrl = require("./DeployOnPush/DeployWithGitUrl");
-require("dotenv").config();
+const config = require('../ecosystem.config.cjs');
 
 return new Promise((resolve, reject) => {
-    DeployWithGitUrl(process.env.GIT_URL)
+    DeployWithGitUrl(config.apps[0].env.GIT_URL, config.apps[0].env.BRANCHES)
         .then(resolve)
         .catch(reject);
 });
