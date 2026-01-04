@@ -1,8 +1,12 @@
 const execCommand = require("../utils/execCommand");
 const fs = require("fs");
 const path = require("path");
+const { setUpdating } = require("../var/onUpdate");
+
 
 module.exports = async function (repoUrl, branche = "main") {
+
+    setUpdating(true);
     
     try {
         
@@ -21,17 +25,29 @@ module.exports = async function (repoUrl, branche = "main") {
             await execCommand(`git -C ${appDir} reset --hard origin/${branche}`);
         }
 
+        console.log('🔍 Recherche de .env...');
+
+        if (fs.existsSync(path.join(__dirname, '../../', '.env')))
+        {
+            console.log('✅ .env trouvé, mise à jour...');
+            fs.copyFileSync(path.join(__dirname, '../../', '.env'), path.join(appDir, '.env'));
+        }
+        else
+        {
+            console.log('❌ .env non trouvé.');
+        }
+
         console.log("📦 Installation des dépendances...");
         
         const hasPackageLock = fs.existsSync(path.join(appDir, "package-lock.json"));
         
         if (hasPackageLock) {
-            await execCommand(`npm ci`, { 
+            await execCommand(`npm ci --force`, { 
                 cwd: appDir,
                 env: { ...process.env, NODE_ENV: 'development' }
             });
         } else {
-            await execCommand(`npm install`, { 
+            await execCommand(`npm install --force`, { 
                 cwd: appDir,
                 env: { ...process.env, NODE_ENV: 'development' }
             });
@@ -64,6 +80,9 @@ module.exports = async function (repoUrl, branche = "main") {
         if (err.stderr) console.error("stderr:", err.stderr);
         
         throw err;
+    }
+    finally {
+        setUpdating(false);
     }
 
 };

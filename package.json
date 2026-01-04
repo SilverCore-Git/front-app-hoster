@@ -8,8 +8,8 @@
     "start": "pm2 start ecosystem.config.cjs",
     "stop": "pm2 stop ecosystem.config.cjs",
     "restart": "npm run stop && npm run start",
-    "deploy": "npm i && npm run deploy:git && npm run start",
-    "redeploy": "npm run stop && npm run deploy",
+    "deploy": "npm i && npm run deploy:git && npm run stop && npm run start",
+    "redeploy": "npm run deploy",
     "deploy:git": "node assets/DeployGit.js"
   },
   "author": "Silvercore_cloud",
