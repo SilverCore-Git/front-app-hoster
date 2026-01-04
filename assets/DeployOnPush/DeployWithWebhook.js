@@ -1,12 +1,13 @@
 const DeployWithGitUrl = require("./DeployWithGitUrl");
+require("dotenv").config();
 
 module.exports = async function (webhook) {
         
     try {
         
-        if (!webhook.ref || webhook.ref !== "refs/heads/main")
+        if (!webhook.ref || webhook.ref !== `refs/heads/${process.env.BRANCHES}`)
         {
-            console.log("Push ignoré, ce n'est pas la branche main");
+            console.log(`Push ignoré, ce n'est pas la branche ${process.env.BRANCHES}`);
             return;
         }
 
