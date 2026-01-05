@@ -12,21 +12,6 @@ require("dotenv").config();
 const app = express();
 
 app.use(morgan("dev"));
-app.use((err, req, res, next) => {
-    console.error("🔥 Erreur:", err);
-
-    if (req.path.startsWith("/api")) {
-        return res.status(500).json({
-            error: true,
-            morgan: "Erreur interne du serveur",
-        });
-    }
-
-    res.status(500).sendFile(
-        path.join(__dirname, "views", "500.html")
-    );
-});
-
 
 app.use(`/api/webhook`, webhook_router);
 app.use('/api/views', express.static(path.join(__dirname, 'views')));
@@ -62,6 +47,22 @@ app.use(express.static(path.join(__dirname, "../app/dist")));
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../app/dist", "index.html"));
 });
+
+app.use((err, req, res, next) => {
+    console.error("🔥 Erreur:", err);
+
+    if (req.path.startsWith("/api")) {
+        return res.status(500).json({
+            error: true,
+            morgan: "Erreur interne du serveur",
+        });
+    }
+
+    res.status(500).sendFile(
+        path.join(__dirname, "views", "500.html")
+    );
+});
+
 
 const PORT = process.env.PORT || 3000;
 
