@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: "www.silvercore.fr", // domaine
+            name: "www.service.fr", // domaine
             script: "assets/server.js",
             instances: 1,            // ou "max" si cluster
             exec_mode: "fork",       // ou "cluster"
@@ -13,6 +13,7 @@ module.exports = {
                 BRANCHES: "main",
                 WEBHOOK_ID: "123456789",
                 WEBHOOK_SECRET: "secret",
+                API_PWD: "passwd",
                 NODE_ENV: "production",
                 PORT: 3000,
             },
