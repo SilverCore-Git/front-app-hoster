@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mise à jour - Silvercore host</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#646cff', // Ta couleur
+                        dark: '#0a0a0a',    // Fond très sombre
+                    },
+                    animation: {
+                        'float': 'float 7s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                            '50%': { opacity: '0.3', transform: 'scale(1.1)' },
+                        }
+                    }
+                }
+            }
+        }
+
+        async function fetchStatus()
+        {
+            const res = await fetch('/api/maj/status').then(res => res.json());
+            if (!res.isUpdating) return window.location.reload();
+        }
+
+        setInterval(async () => {
+            await fetchStatus();
+        }, 1000);
+    </script>
+    <style>
+        /* Lissage des polices pour un rendu "Apple-like" */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Cercle de chargement custom ultra-fin */
+        .loader-ring {
+            border: 2px solid transparent;
+            border-top: 2px solid #646cff;
+            border-right: 2px solid #646cff;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-dark text-white h-screen flex flex-col items-center justify-center overflow-hidden relative selection:bg-primary/30">
+
+    <div class="relative z-10 flex flex-col items-center text-center px-4">
+        
+        <div class="mb-12 animate-float relative">
+            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-white/5 to-white/0 flex items-center justify-center shadow-[0_0_40px_rgba(100,108,255,0.2)] backdrop-blur-sm border border-white/5">
+                <i class="bi bi-cloud-arrow-down-fill text-4xl text-primary drop-shadow-[0_0_10px_rgba(100,108,255,0.5)]"></i>
+            </div>
+            
+            <div class="absolute inset-0 -m-1">
+                <div class="w-full h-full rounded-full border border-white/5"></div>
+            </div>
+        </div>
+
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 pb-2">
+            Mise à jour
+        </h1>
+
+        <p class="text-lg text-gray-400 font-light max-w-md leading-relaxed mx-auto">
+            Nous installons la nouvelle version de l'application. <br />
+            L'application redémarrera automatiquement.
+        </p>
+
+        <div class="mt-12 inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/5 backdrop-blur-md shadow-lg">
+            <div class="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+            <span class="text-sm font-medium text-gray-300 tracking-wide uppercase text-xs">Installation en cours</span>
+        </div>
+
+    </div>
+
+    <div class="absolute bottom-8 w-full text-center">
+        <p class="text-white/20 text-xs tracking-[0.2em] font-medium uppercase">&copy; Silvercore host</p>
+    </div>
+
+</body>
+</html>
