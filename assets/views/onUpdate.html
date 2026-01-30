@@ -11,8 +11,8 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#646cff', // Ta couleur
-                        dark: '#0a0a0a',    // Fond très sombre
+                        primary: '#646cff',
+                        dark: '#0a0a0a',
                     },
                     animation: {
                         'float': 'float 7s ease-in-out infinite',
@@ -34,22 +34,23 @@
 
         async function fetchStatus()
         {
-            const res = await fetch('/api/maj/status').then(res => res.json());
-            if (!res.isUpdating) return window.location.reload();
+            const res = await fetch('/score-host/api/status').then(res => res.json());
+            if (!res.service.onUpdate) return window.location.reload();
         }
 
         setInterval(async () => {
             await fetchStatus();
         }, 1000);
+
     </script>
+
     <style>
-        /* Lissage des polices pour un rendu "Apple-like" */
+        
         body {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Cercle de chargement custom ultra-fin */
         .loader-ring {
             border: 2px solid transparent;
             border-top: 2px solid #646cff;
@@ -65,7 +66,9 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+
 </head>
+
 <body class="bg-dark text-white h-screen flex flex-col items-center justify-center overflow-hidden relative selection:bg-primary/30">
 
     <div class="relative z-10 flex flex-col items-center text-center px-4">
