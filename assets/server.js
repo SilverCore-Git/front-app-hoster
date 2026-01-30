@@ -9,11 +9,17 @@ const api_router = require("./routes/api");
 const { isUpdating  } = require("./var/onUpdate");
 const { isMaintenance } = require("./var/maintenance");
 const { isErrored, setErrored } = require("./var/errored");
+const { version } = require("../package.json");
 require("dotenv").config();
+
 
 const app = express();
 
 app.use(morgan("dev"));
+app.use((req, res, next) => {
+  res.setHeader('X-Powered-By', `Silverhost/${version}`);
+  next();
+});
 
 app.use(`/score-host/api`, api_router);
 app.use(`/score-host/api/webhook`, webhook_router);
