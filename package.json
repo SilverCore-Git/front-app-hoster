@@ -6,8 +6,8 @@
     "dev": "node assets/finalyLog && nodemon assets/server.js",
     "start": "pm2 start ecosystem.config.cjs && node assets/finalyLog",
     "stop": "pm2 stop ecosystem.config.cjs",
-    "restart": "npm run stop && npm run start",
-    "deploy": "npm i && npm run deploy:git && npm run stop && npm run start && node assets/finalyLog",
+    "restart": "bun run stop && bun run start",
+    "deploy": "bun i && bun run deploy:git && bun run stop && bun run start && node assets/finalyLog",
     "deploy:git": "node assets/DeployGit.js && node assets/finalyLog"
   },
   "author": "Silvercore_cloud",
