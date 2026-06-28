@@ -3,6 +3,7 @@ module.exports = {
         {
             name: "www.service.fr", // domaine
             script: "assets/server.js",
+            interpreter: "bun",
             instances: 1,            // ou "max" si cluster
             exec_mode: "fork",       // ou "cluster"
             autorestart: true,
